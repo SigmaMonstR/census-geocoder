@@ -17,6 +17,21 @@ Each call kicks back a data frame with the matched address, lat + lon in WGS84, 
 
 ######examples
 census_geocoder("1600 Pennsylvania Ave","c","Washington","DC") 
-census_geocoder("1800 F Street NW","z","20006","DC") 
+
+census_geocoder("253 Broadway","z","10007","NY") 
+
+
+
+address <- c("1800 F Street NW", "1600 Pennsylvania Av")
+
+type <- c("z","c")
+
+secondary <- c("20006","Washington DC")
+
+state <- c("DC","DC")
+
+for(i in 1:length(address)){
+  census_geocoder(address[i], type[i], secondary[i], state[i])      
+      }
 
 
