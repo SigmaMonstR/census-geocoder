@@ -1,5 +1,6 @@
 
 census_geocoder <- function(address,type,secondary,state){
+
     library(RCurl)
     library(jsonlite)
 
