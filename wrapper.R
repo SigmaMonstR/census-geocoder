@@ -1,8 +1,8 @@
 
 census_geocoder <- function(address,type,secondary,state){
 
-    library(RCurl)
     library(jsonlite)
+    library(RCurl)
 
     addy <- paste("street=",gsub(" ","+",address),sep="")
     if(type=="z"){
@@ -12,7 +12,7 @@ census_geocoder <- function(address,type,secondary,state){
     }
     
     state <- paste("state=",gsub(" ","+",state),sep="") 
-    string <-  paste("geocoding.geo.census.gov/geocoder/geographies/address?",addy,"&",wild,"&",state,"&benchmark=4&vintage=4&format=json",sep="")
+    string <-  paste("https://geocoding.geo.census.gov/geocoder/geographies/address?",addy,"&",wild,"&",state,"&benchmark=4&vintage=4&format=json",sep="")
     json_file<-fromJSON(getURL(string))
 
     #Check if there are results
@@ -30,9 +30,9 @@ census_geocoder <- function(address,type,secondary,state){
         
       } else{
 
-        #Address,lat,lon,tract, block
+        #Address,lat,lon,tract, block (keep first match)
         return(data.frame(
-                address=as.character(data.frame(json_file$result$addressMatches)[1,1]),
+                address=as.character(data.frame(json_file$result$addressMatches$matchedAddress)[1,]),
                 lat = as.character(json_file$result$addressMatches$coordinates$y[1]),
                 lon= as.character(json_file$result$addressMatches$coordinates$x[1]),
                 tract = data.frame(json_file$result$addressMatches$geographies$`Census Tracts`)$GEOID[1],
