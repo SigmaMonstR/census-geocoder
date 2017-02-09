@@ -16,7 +16,7 @@ census_geocoder <- function(address,type,secondary,state){
     json_file<-fromJSON(getURL(string))
 
     #Check if there are results
-    if(nrow(json_file$result$addressMatches$coordinates)>0){
+    if(length(json_file$result$addressMatches$coordinates)>0){
       
       #If not, kick back an empty dataframe
       if(is.null(json_file$result$addressMatches$coordinates$x[1])==TRUE){
